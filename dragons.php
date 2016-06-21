@@ -27,6 +27,21 @@ class Dragon
     }
 }
 
+class DragonsComparator
+{
+    public static function uDiffDragons($myDragons, $hisDragons)
+    {
+        return array_udiff($myDragons, $hisDragons, function ($myDragon, $hisDragon) use ($myDragons) {
+            if ($myDragon->equals($hisDragon)) {
+                return 0;
+            }
+            return count(array_filter($myDragons, function($dragon) use ($hisDragon) {
+                return $dragon->equals($hisDragon);
+            })) == 0 ? 1 : -1;
+        });
+    }
+}
+
 $myDragons = [
     new Dragon('Bernard', 'fire'),
     new Dragon('Felix', 'ice'), // to return in diff
@@ -43,34 +58,14 @@ $hisDragons = [
 
 
 // get my unique dragons
-$myDiff = array_udiff($myDragons, $hisDragons, function ($myDragon, $hisDragon) use ($myDragons) {
-    if ($myDragon->equals($hisDragon)) {
-        return 0;
-    }
-    return count(array_filter($myDragons, function($dragon) use ($hisDragon) {
-        return $dragon->equals($hisDragon);
-    })) == 0 ? 1 : -1;
-});
+$myDiff = DragonsComparator::uDiffDragons($myDragons, $hisDragons);
 
 // get my unique dragons
-$myDiff2 = array_udiff($myDragons, [], function ($myDragon, $hisDragon) use ($myDragons) {
-    if ($myDragon->equals($hisDragon)) {
-        return 0;
-    }
-    return count(array_filter($myDragons, function($dragon) use ($hisDragon) {
-        return $dragon->equals($hisDragon);
-    })) == 0 ? 1 : -1;
-});
+$myDiff2 = DragonsComparator::uDiffDragons($myDragons, []);
 
 // get his unique dragons
-$hisDiff = array_udiff($hisDragons, $myDragons, function ($myDragon, $hisDragon) use ($hisDragons){
-    if ($myDragon->equals($hisDragon)) {
-        return 0;
-    }
-    return count(array_filter($hisDragons, function($dragon) use ($hisDragon) {
-        return $dragon->equals($hisDragon);
-    })) == 0 ? 1 : -1;
-});
+$hisDiff = DragonsComparator::uDiffDragons($hisDragons, $myDragons);
+
 
 echo PHP_EOL;
 echo json_encode($myDiff) . PHP_EOL;
