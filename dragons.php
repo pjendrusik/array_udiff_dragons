@@ -20,10 +20,20 @@ class Dragon
 
     public function equals(Dragon $dragon)
     {
-        if ($dragon->name === $this->name && $dragon->power === $this->power) {
-            return true;
-        }
-        return false;
+        return $dragon->getHash() === $this->getHash();
+    }
+
+    public function toArray()
+    {
+        return [
+            'name' => $this->name,
+            'power' => $this->power
+        ];
+    }
+
+    public function getHash()
+    {
+        return hash('md5', json_encode($this->toArray()));
     }
 }
 
