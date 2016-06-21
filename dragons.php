@@ -30,14 +30,14 @@ class Dragon
 $myDragons = [
     new Dragon('Bernard', 'fire'),
     new Dragon('Felix', 'ice'), // to return in diff
-    new Dragon('Janush', 'fire'), // to return if diff
+    new Dragon('Janush', 'fire'), // to return in diff
     new Dragon('Missy', 'gas')
 ];
 
 $hisDragons = [
     new Dragon('Bernard', 'fire'),
-    new Dragon('Flufy', 'ice'), // to return if diff
-    new Dragon('Sleppy', 'none'), // to return if diff
+    new Dragon('Flufy', 'ice'), // to return in diff
+    new Dragon('Sleppy', 'none'), // to return in diff
     new Dragon('Missy', 'gas')
 ];
 
